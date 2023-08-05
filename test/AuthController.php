@@ -1,31 +1,27 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 
 class AuthController extends Controller
-{
+{   
+    public function unauthorized(Request $request){
+        return response()->json([
+            'status' => 'Error',
+            'message' => 'Unauthorized',
+        ], 200);
+    }
 
+    
     public function signUp(Request $request){
-        $validator = Validator::make($request->all(), [
+        $request->validate([
             'name' => 'required|string|max:255',
             'phone_number' => 'required|unique:users|max:255',
             'password' => 'required|string|min:1',
         ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => 'Error',
-                'message' => 'Validation failed',
-                'errors' => $validator->errors(),
-            ], 400);
-        }
 
         $user = new User();
         $user->name = $request->name;
@@ -34,10 +30,18 @@ class AuthController extends Controller
 
         $user->save();
 
+        $token = Auth::login($user);
         return response()->json([
-            'status' => 'Signed up succesfully'
+            'status' => 'success',
+            'message' => 'User created successfully',
+            'user' => $user,
+            'authorisation' => [
+                'token' => $token,
+                'type' => 'bearer',
+            ]
         ]);
     }
+
 
 
     // Sign-in method to generate JWT token
@@ -79,6 +83,15 @@ class AuthController extends Controller
             'name' => $user->name,
             'phone' => $user->phone_number,
             'token' => $user->token->token
+        ]);
+    }
+
+
+    public function logout(){
+        Auth::logout();
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Successfully logged out',
         ]);
     }
 }
