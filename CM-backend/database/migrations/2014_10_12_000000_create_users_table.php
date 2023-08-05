@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -8,30 +8,30 @@ class CreateUsersTable extends Migration
 {
     public function up()
     {
-        Schema::create('contact_lists', function (Blueprint $table) {
-            $table->id();  
-            $table->string('contact_name');
-            $table->string('contact_number')->unique();
-            $table->decimal('latitude', 10, 7)->nullable();
-            $table->decimal('longitude', 10, 7)->nullable();
-            $table->timestamps();
-        });
-
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('phone_number')->unique();
             $table->string('password');
-            $table->unsignedBigInteger('contact_list')->nullable();
-            $table->foreign('contact_list')->references('id')->on('contact_lists')->onDelete('cascade');
-
             $table->timestamps();
+        });
+
+        Schema::create('contact_lists', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->string('contact_name');
+            $table->string('contact_number')->unique();
+            $table->decimal('latitude', 10, 7)->nullable();
+            $table->decimal('longitude', 10, 7)->nullable();
+            $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
     public function down()
     {
-        Schema::dropIfExists('users');
         Schema::dropIfExists('contact_lists');
+        Schema::dropIfExists('users');
     }
 }

@@ -5,8 +5,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class ContactList extends Model
 {
+    protected $fillable = ['name', 'phone', 'latitude', 'longitude'];
+    
     public function contacts()
     {
-        return $this->hasMany(Contact::class);
+        return $this->belongsTo(User::class);
     }
 }

@@ -13,5 +13,5 @@ use App\Http\Controllers\UserController;
 Route::post('/signin', [AuthController::class, 'signIn']);
 Route::post('/signup', [AuthController::class, 'signUp']);
 
-Route::post('/contact-list', [UserController::class, 'getOrCreateContactList']);
+Route::get('/contact-list', [UserController::class, 'getContactList']);
 Route::post('/create-contact', [UserController::class, 'createContact']);

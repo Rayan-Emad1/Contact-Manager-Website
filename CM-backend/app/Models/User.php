@@ -28,6 +28,6 @@ class User extends Authenticatable
     
     public function contactList()
     {
-        return $this->belongsTo(ContactList::class, 'contact_list');
+        return $this->hasMany(ContactList::class,'contact_list');
     }
 }
