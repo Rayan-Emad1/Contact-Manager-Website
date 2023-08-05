@@ -18,25 +18,30 @@ class UserController extends Controller {
         $this->middleware('auth:api');
     }
 
-    public function getContactList(Request $request) {
+    public function getContactList(Request $request)
+    {
         $user = Auth::user();
-    
-        if (!$user->contact_list) {
+
+        // Check if the user has any contact lists
+        if (!$user->contactLists()->exists()) {
             return response()->json([
                 'status' => 'Error',
-                'message' => 'User does not have a contact list.'
+                'message' => 'User does not have any contact lists.',
             ], 404);
         }
-    
-        $contactList = ContactList::with('contacts')->find($user->contact_list);
-    
+
+        // Fetch all the contact lists with their associated contacts
+         $contactLists = ContactList::where('user_id', $user->id)->get();
+
         return response()->json([
             'status' => 'Success',
-            'contact_list' => $contactList
+            'contact_lists' => $contactLists,
         ]);
     }
 
+
     public function createContact(Request $request) {
+
         $validator = Validator::make($request->all(), [
             'contact_name' => 'required|string|max:255',
             'contact_number' => 'required|max:255',
@@ -54,10 +59,9 @@ class UserController extends Controller {
         
 
         $contact = new ContactList();
-        
-        $contact->user_id = $user->id;
-        // $contact->user_id = $request->id;
+            // $contact->user_id = $request->id;
 
+        $contact->user_id = $user->id;
         $contact->contact_name= $request->contact_name;
         $contact->contact_number = $request->contact_number;
         $contact->latitude = $request->latitude;
@@ -70,9 +74,8 @@ class UserController extends Controller {
             'contact' => $contact
         ]);
     }
+
 }
-
-
 
 
 
