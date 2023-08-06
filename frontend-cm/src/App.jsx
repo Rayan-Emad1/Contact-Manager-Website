@@ -5,19 +5,19 @@ import SignUp from './Pages/Signup';
 import ContactListContainer from './components/ContactListContainer';
 
 function App() {
-  return (
+  return(
     <Router>
       <div className="App">
         <header className="App-header">
           <Routes>
+            <Route index element={<ContactListContainer />} />
             <Route path="/signin" element={<SignIn />} />
             <Route path="/signup" element={<SignUp />} />
-            <Route path="/contact-list" element={<ContactListContainer />} />
           </Routes>
         </header>
       </div>
     </Router>
-  );
-}
+
+)}
 
 export default App;
