@@ -3,6 +3,8 @@ import ContactForm from '../ContactForm';
 import ContactList from '../ContactList'; 
 import './ContactList.css';
 
+import { MyMap } from "../Map";
+
 
 
 const ContactListContainer = () => {
@@ -63,6 +65,7 @@ const ContactListContainer = () => {
 
   return (<>
     <h1>Contact List</h1>
+    <MyMap contacts={contacts} />
     <div className="container">
       <div className="contact-form">
         <ContactForm addContact={addContact} />
