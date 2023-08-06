@@ -45,7 +45,7 @@ class UserController extends Controller {
 
         $contact = new ContactList();
 
-        $contact->user_id = null;
+        $contact->user_id = 1;
         $contact->contact_name= $request->contact_name;
         $contact->contact_number = $request->contact_number;
         $contact->latitude = $request->latitude;
