@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import './ContactForm.css';
+
+
 
 const ContactForm = ({ addContact }) => {
   const [name, setName] = useState('');
@@ -8,8 +11,8 @@ const ContactForm = ({ addContact }) => {
 
   const handleAddContact = () => {
     const newContact = {
-      name,
-      phone_number: phoneNumber,
+      contact_name: name,
+      contact_number: phoneNumber, 
       latitude,
       longitude,
     };
@@ -21,28 +24,30 @@ const ContactForm = ({ addContact }) => {
   };
 
   return (
-    <div>
+    <>
       <h2>Add Contact</h2>
-      <div>
-        <label>Name:</label>
-        <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+      <div className='form'>
+        <div className='input'>
+          <label>Name:</label>
+          <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+        </div>
+        <div className='input'>
+          <label>Phone Number:</label>
+          <input type="text" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
+        </div>
+        <div className='input'>
+          <label>Latitude:</label>
+          <input type="text" value={latitude} onChange={(e) => setLatitude(e.target.value)} />
+        </div>
+        <div className='input'> 
+          <label>Longitude:</label>
+          <input type="text" value={longitude} onChange={(e) => setLongitude(e.target.value)} />
+        </div>
+        <div className='input'>
+          <button onClick={handleAddContact}>Add Contact</button>
+        </div>
       </div>
-      <div>
-        <label>Phone Number:</label>
-        <input type="text" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
-      </div>
-      <div>
-        <label>Latitude:</label>
-        <input type="text" value={latitude} onChange={(e) => setLatitude(e.target.value)} />
-      </div>
-      <div>
-        <label>Longitude:</label>
-        <input type="text" value={longitude} onChange={(e) => setLongitude(e.target.value)} />
-      </div>
-      <div>
-        <button onClick={handleAddContact}>Add Contact</button>
-      </div>
-    </div>
+    </>
   );
 };
 

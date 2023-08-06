@@ -1,0 +1,8 @@
+.card{
+    display: flex;
+    flex-direction: column;
+    grid-row-gap: 2px;
+    margin: 20px;
+    padding: 10px;
+    background-color: lightgray;  
+}

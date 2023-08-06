@@ -1,19 +1,15 @@
 import React from 'react';
+import './ContactCard.css';
 
-const ContactList = ({ contacts }) => {
+const ContactCard = ({ contact }) => {
   return (
-    <div>
-      <h2>Contact List</h2>
-      {contacts.map((contact, index) => (
-        <div key={index}>
-          <p>Name: {contact.name}</p>
-          <p>Phone Number: {contact.phone_number}</p>
-          <p>Latitude: {contact.latitude}</p>
-          <p>Longitude: {contact.longitude}</p>
-        </div>
-      ))}
+    <div className='card'>
+      <p>Name: {contact.contact_name}</p>
+      <p>Phone Number: {contact.contact_number}</p>
+      <p>Latitude: {contact.latitude}</p>
+      <p>Longitude: {contact.longitude}</p>
     </div>
   );
 };
 
-export default ContactList;
+export default ContactCard;
